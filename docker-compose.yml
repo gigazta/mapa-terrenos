@@ -1,0 +1,14 @@
+services:
+  mapa:
+    build: ./app
+    ports:
+      - "8080:5000"
+    volumes:
+      - mapa_data:/data
+    environment:
+      - MAPA_AUTH_USER=admin
+      - MAPA_AUTH_PASS=troque-esta-senha
+    restart: unless-stopped
+
+volumes:
+  mapa_data:

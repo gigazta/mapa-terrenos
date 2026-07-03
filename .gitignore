@@ -1,0 +1,21 @@
+# Dados e planilhas locais (nao devem ir pro repositorio publico)
+dados_atual.csv
+dados_atual.xlsx
+geocode_cache.json
+index.html
+nome_original.txt
+*.xlsx
+*.csv
+
+# Notas de planejamento internas
+PROJETO_MAPA_IMOVEIS.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor/IDE
+.claude/
+.vscode/
