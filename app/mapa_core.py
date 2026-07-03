@@ -347,14 +347,16 @@ body.tema-escuro .leaflet-popup-tip {
 
 #cards-filtros {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: 0;
+  right: 0;
   z-index: 1000;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 12px;
-  max-height: calc(100vh - 32px);
+  max-height: 100vh;
+  padding: 18px;
   overflow-y: auto;
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
