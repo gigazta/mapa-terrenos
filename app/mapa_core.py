@@ -74,14 +74,14 @@ def carregar_dados(caminho: str) -> pd.DataFrame:
         else:
             df = pd.read_csv(caminho, dtype=str)
     except Exception as exc:
-        raise PlanilhaInvalida(f"Nao foi possivel ler o arquivo como planilha: {exc}") from exc
+        raise PlanilhaInvalida(f"Não foi possível ler o arquivo como planilha: {exc}") from exc
 
     if len(df) > MAX_LINHAS:
-        raise PlanilhaInvalida(f"Planilha tem {len(df)} linhas, limite e {MAX_LINHAS}.")
+        raise PlanilhaInvalida(f"Planilha tem {len(df)} linhas, limite é {MAX_LINHAS}.")
 
     df.columns = [normalizar_coluna(c) for c in df.columns]
     if "endereco" not in df.columns:
-        raise PlanilhaInvalida("Coluna 'endereco' nao encontrada na planilha.")
+        raise PlanilhaInvalida("Coluna 'endereco' não encontrada na planilha.")
 
     if "lat" in df.columns:
         df["lat"] = df["lat"].apply(lambda v: _corrigir_coordenada(v, _FAIXA_LAT))
@@ -212,7 +212,7 @@ def cor_do_marcador(violencia: bool) -> str:
 def montar_popup(row: pd.Series) -> str:
     aviso = (
         '<p style="color:red;font-weight:bold;">'
-        "⚠ Area com indicador de criminalidade/risco</p>"
+        "⚠ Área com indicador de criminalidade/risco</p>"
         if row.get("violencia")
         else ""
     )
@@ -224,10 +224,10 @@ def montar_popup(row: pd.Series) -> str:
     <div style="font-family: Arial, sans-serif; font-size: 13px; max-width: 260px;">
         <b>{descricao}</b><br>
         <b>Tipo:</b> {tipo}<br>
-        <b>Endereco:</b> {endereco}<br>
-        <b>Situacao:</b> {situacao}<br>
-        <b>Valor contabil:</b> {formatar_moeda(row.get('valor_cont'))}<br>
-        <b>Valor de avaliacao:</b> {formatar_moeda(row.get('valor_aval'))}<br>
+        <b>Endereço:</b> {endereco}<br>
+        <b>Situação:</b> {situacao}<br>
+        <b>Valor contábil:</b> {formatar_moeda(row.get('valor_cont'))}<br>
+        <b>Valor de avaliação:</b> {formatar_moeda(row.get('valor_aval'))}<br>
         {aviso}
     </div>
     """
@@ -299,7 +299,7 @@ def montar_mapa(df: pd.DataFrame) -> folium.Map:
 
 
 def gerar(csv_path: str, cache_path: str, output_path: str) -> list:
-    """Executa o pipeline completo. Retorna lista de (idx, endereco) nao geocodificados."""
+    """Executa o pipeline completo. Retorna lista de (idx, endereco) não geocodificados."""
     df = carregar_dados(csv_path)
     df, nao_encontrados = geocodificar_faltantes(df, cache_path)
     mapa = montar_mapa(df)
@@ -763,21 +763,21 @@ _FILTROS_HTML = """
 
   <div class="card-filtro recolhido" data-card="risco">
     <div class="card-header">
-      <button class="card-icone" type="button" title="Area de risco">__ICONE_BULLET__</button>
-      <span class="card-titulo">Area de risco</span>
+      <button class="card-icone" type="button" title="Área de risco">__ICONE_BULLET__</button>
+      <span class="card-titulo">Área de risco</span>
       <button class="card-chevron" type="button">&#9662;</button>
     </div>
     <div class="card-corpo">
       <div class="secao-corpo" id="secao-risco">
         <div class="item-linha" data-campo="risco" data-valor="comum">
-          <span class="item-label">Imoveis em area comum</span>
+          <span class="item-label">Imóveis em área comum</span>
           <div class="item-direita">
             <span class="contagem"></span>
             <label class="switch"><input type="checkbox" checked data-chave="comum"></label>
           </div>
         </div>
         <div class="item-linha" data-campo="risco" data-valor="risco">
-          <span class="item-label">Imoveis em area de risco</span>
+          <span class="item-label">Imóveis em área de risco</span>
           <div class="item-direita">
             <span class="contagem"></span>
             <label class="switch"><input type="checkbox" checked data-chave="risco"></label>
@@ -789,8 +789,8 @@ _FILTROS_HTML = """
 
   <div class="card-filtro recolhido" data-card="valor">
     <div class="card-header">
-      <button class="card-icone" type="button" title="Valor de avaliacao">__ICONE_MONEY__</button>
-      <span class="card-titulo">Valor de avaliacao</span>
+      <button class="card-icone" type="button" title="Valor de avaliação">__ICONE_MONEY__</button>
+      <span class="card-titulo">Valor de avaliação</span>
       <button class="card-chevron" type="button">&#9662;</button>
     </div>
     <div class="card-corpo">
@@ -809,8 +809,8 @@ _FILTROS_HTML = """
 
   <div class="card-filtro recolhido" data-card="ano">
     <div class="card-header">
-      <button class="card-icone" type="button" title="Ano de aquisicao">__ICONE_DATE__</button>
-      <span class="card-titulo">Ano de aquisicao</span>
+      <button class="card-icone" type="button" title="Ano de aquisição">__ICONE_DATE__</button>
+      <span class="card-titulo">Ano de aquisição</span>
       <button class="card-chevron" type="button">&#9662;</button>
     </div>
     <div class="card-corpo">
@@ -1118,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function() {
       else if (presente) { leafletMap.removeLayer(m); }
     });
     document.getElementById('contador-resultados').textContent =
-      contador + ' de ' + marcadores.length + ' imoveis';
+      contador + ' de ' + marcadores.length + ' imóveis';
     atualizarContagens();
   }
 

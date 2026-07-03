@@ -26,9 +26,9 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_BYTES
 
 
 def requer_auth(view):
-    """Basic auth opcional: so exige credenciais se MAPA_AUTH_USER estiver
-    configurado. Sem essa variavel, o app fica aberto (ex: atras de um
-    proxy/rede ja controlada por outra camada)."""
+    """Basic auth opcional: só exige credenciais se MAPA_AUTH_USER estiver
+    configurado. Sem essa variável, o app fica aberto (ex: atrás de um
+    proxy/rede já controlada por outra camada)."""
     @wraps(view)
     def wrapper(*args, **kwargs):
         if not AUTH_USER:
@@ -38,7 +38,7 @@ def requer_auth(view):
         senha_ok = auth and hmac.compare_digest(auth.password or "", AUTH_PASS)
         if not (usuario_ok and senha_ok):
             return Response(
-                "Autenticacao necessaria.", 401,
+                "Autenticação necessária.", 401,
                 {"WWW-Authenticate": 'Basic realm="Mapa de Imoveis"'},
             )
         return view(*args, **kwargs)
@@ -179,8 +179,8 @@ FORM_HTML = """
 <body>
 <div class="card">
   <h1>Atualizar planilha do mapa</h1>
-  <p class="descricao">Envie um arquivo .csv ou .xlsx (max 5MB) com as colunas da tabela de imoveis.
-  Enderecos sem lat/long serao geocodificados automaticamente (pode demorar alguns minutos em planilhas grandes).</p>
+  <p class="descricao">Envie um arquivo .csv ou .xlsx (max 5MB) com as colunas da tabela de imóveis.
+  Endereços sem lat/long serão geocodificados automaticamente (pode demorar alguns minutos em planilhas grandes).</p>
   __MENSAGEM__
   <form method="post" action="/upload" enctype="multipart/form-data">
     <input type="file" name="planilha" accept=".csv,.xlsx" required>
@@ -230,7 +230,7 @@ def pagina_upload(mensagem: str = "") -> str:
 @requer_auth
 def index():
     if not os.path.exists(INDEX_PATH):
-        return "Mapa ainda nao foi gerado. <a href='/upload'>Enviar planilha</a>.", 404
+        return "Mapa ainda não foi gerado. <a href='/upload'>Enviar planilha</a>.", 404
     return send_file(INDEX_PATH)
 
 
@@ -263,7 +263,7 @@ def upload_post():
     extensao = os.path.splitext(arquivo.filename)[1].lower()
     if extensao not in EXTENSOES_PERMITIDAS:
         return pagina_upload(
-            '<div class="banner erro">Formato nao suportado. Envie .csv ou .xlsx.</div>'
+            '<div class="banner erro">Formato não suportado. Envie .csv ou .xlsx.</div>'
         ), 400
 
     os.makedirs(DATA_DIR, exist_ok=True)
@@ -300,7 +300,7 @@ def upload_post():
             f"<li>{html.escape(str(end))}</li>" for _, end in nao_encontrados[:20]
         )
         aviso = (
-            f'<div class="banner aviso">{len(nao_encontrados)} endereco(s) nao '
+            f'<div class="banner aviso">{len(nao_encontrados)} endereço(s) não '
             f"foram geocodificados e ficaram de fora do mapa:<ul>{linhas}</ul></div>"
         )
 
